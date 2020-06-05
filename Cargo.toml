@@ -1,0 +1,10 @@
+[package]
+name = "embedit"
+version = "0.1.0"
+authors = ["Zicklag <zicklag@katharostech.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+lazy_static_include = "2.2.2"
