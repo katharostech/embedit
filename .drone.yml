@@ -5,7 +5,7 @@ name: build
 steps:
   # Make sure image builds
   - name: build
-    image: banzaicloud/drone-kaniko:0.3.2
+    image: plugins/docker:latest
 
 trigger:
   ref:
@@ -21,7 +21,7 @@ name: release
 
 steps:
   - name: release
-    image: banzaicloud/drone-kaniko:0.3.2
+    image: latest
     settings:
       repo: katharostech/dokuwiki
       tags:
