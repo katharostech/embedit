@@ -6,6 +6,8 @@ steps:
   # Make sure image builds
   - name: build
     image: plugins/docker:latest
+    settings:
+      dry_run: true
 
 trigger:
   ref:
