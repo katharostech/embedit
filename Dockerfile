@@ -1,12 +1,9 @@
-FROM alpine:latest as chown
-COPY ./* /project/
-RUN chown -R 1000:1000 /project
-
-FROM ekidd/rust-musl-builder:1.44.0 as build
-COPY --from=chown /project/ /home/rust/src/
-WORKDIR /home/rust/src/project
-RUN cargo build --release && rm -rf target/
+FROM ekidd/rust-musl-builder:1.42.0 as builder
+ADD --chown=rust:rust . ./
+CMD cargo build --release
 
 FROM alpine:latest
-COPY --from=build /home/rust/src/project/target/x86_64-unknown-linux-musl/release/embedit /usr/local/bin/embedit
-CMD embedit
+COPY --from=builder \
+    /home/rust/src/target/x86_64-unknown-linux-musl/release/embedit \
+    /usr/local/bin/
+CMD /usr/local/bin/embedit
