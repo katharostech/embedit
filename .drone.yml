@@ -1,0 +1,41 @@
+---
+kind: pipeline
+name: build
+
+steps:
+  # Make sure image builds
+  - name: build
+    image: banzaicloud/drone-kaniko:0.3.2
+
+trigger:
+  ref:
+    exclude:
+      - refs/tags/v*
+  branch:
+    exclude:
+      - feature/*
+
+---
+kind: pipeline
+name: release
+
+steps:
+  - name: release
+    image: banzaicloud/drone-kaniko:0.3.2
+    settings:
+      repo: katharostech/dokuwiki
+      tags:
+        - ${DRONE_TAG}
+      username:
+        from_secret: docker-username
+      password:
+        from_secret: docker-password
+    when:
+      ref:
+        - refs/tags/v*
+
+trigger:
+  event:
+    - tag
+  ref:
+    - refs/tags/v*
