@@ -6,5 +6,5 @@ RUN cargo build --release
 
 FROM alpine:latest
 
-COPY --from /project/target/release/embedit /usr/local/bin/embedit
+COPY --from=build /project/target/release/embedit /usr/local/bin/embedit
 CMD embedit
