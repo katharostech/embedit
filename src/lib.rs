@@ -42,7 +42,7 @@ pub async fn run() {
                 warp::reply::html(
                     HTML_WRAPPER
                         .replace("{video_url}", &query_data.video)
-                        .replace("{body", &embed),
+                        .replace("{body}", &embed),
                 )
             }));
 
