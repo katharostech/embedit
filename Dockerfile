@@ -6,6 +6,7 @@ FROM ekidd/rust-musl-builder:1.44.0 as build
 COPY --from=chown /project/ /home/rust/src/
 WORKDIR /home/rust/src/project
 RUN cargo build --release
+RUN rm -rf target/
 
 FROM alpine:latest
 COPY --from=build /home/rust/src/project/target/release/embedit /usr/local/bin/embedit
