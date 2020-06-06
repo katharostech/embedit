@@ -25,7 +25,7 @@ steps:
   - name: release
     image: plugins/docker:latest
     settings:
-      repo: katharostech/dokuwiki
+      repo: katharostech/embedit
       tags:
         - ${DRONE_TAG}
       username:
