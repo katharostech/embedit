@@ -24,15 +24,14 @@ pub async fn run() {
         .map(|query_data: QueryData| {
             let embed = HTML_EMBED.replace("{video_url}", &query_data.video);
 
-            json!({
+            warp::reply::json(json!({
                 "type": "video",
                 "version": "1.0",
                 "html": embed,
                 // TODO: Definitely not standards complient
                 "width": 500,
                 "height": 500
-            })
-            .to_string()
+            }))
         })
         .or(warp::get()
             .and(query::<QueryData>())
@@ -40,9 +39,11 @@ pub async fn run() {
             // meta tag
             .map(|query_data: QueryData| {
                 let embed = HTML_EMBED.replace("{video_url}", &query_data.video);
-                HTML_WRAPPER
-                    .replace("{video_url}", &query_data.video)
-                    .replace("{body", &embed)
+                warp::reply::html(
+                    HTML_WRAPPER
+                        .replace("{video_url}", &query_data.video)
+                        .replace("{body", &embed),
+                )
             }));
 
     println!("Listening on 0.0.0.0:3030");
