@@ -46,10 +46,11 @@ pub async fn run() {
             // Return an HTML page with the embedded video and the oembed representation
             // meta tag
             .map(|query_data: VideoQuery| {
-                let embed = HTML_EMBED.replace("{video_url}", &query_data.video);
+                let video_url = urlencoding::encode(&query_data.video);
+                let embed = HTML_EMBED.replace("{video_url}", &video_url);
                 warp::reply::html(
                     HTML_WRAPPER
-                        .replace("{video_url}", &query_data.video)
+                        .replace("{video_url}", &video_url)
                         .replace("{body}", &embed),
                 )
             }));
