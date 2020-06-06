@@ -1,6 +1,6 @@
 FROM ekidd/rust-musl-builder:1.42.0 as builder
 ADD --chown=rust:rust . ./
-CMD cargo build --release
+RUN cargo build --release
 
 FROM alpine:latest
 COPY --from=builder \
