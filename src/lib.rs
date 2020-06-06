@@ -24,7 +24,7 @@ pub async fn run() {
         .map(|query_data: QueryData| {
             let embed = HTML_EMBED.replace("{video_url}", &query_data.video);
 
-            warp::reply::json(json!({
+            warp::reply::json(&json!({
                 "type": "video",
                 "version": "1.0",
                 "html": embed,

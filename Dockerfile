@@ -8,5 +8,5 @@ WORKDIR /home/rust/src/project
 RUN cargo build --release
 
 FROM alpine:latest
-COPY --from=build /project/target/release/embedit /usr/local/bin/embedit
+COPY --from=build /home/rust/src/project/target/release/embedit /usr/local/bin/embedit
 CMD embedit
