@@ -23,7 +23,7 @@ name: release
 
 steps:
   - name: release
-    image: latest
+    image: plugins/docker:latest
     settings:
       repo: katharostech/dokuwiki
       tags:
