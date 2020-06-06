@@ -1,5 +1,5 @@
 FROM ekidd/rust-musl-builder:1.42.0 as builder
-ADD --chown=rust:rust . ./
+ADD --chown=1000:1000 . ./
 RUN cargo build --release
 
 FROM alpine:latest
