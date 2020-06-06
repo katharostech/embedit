@@ -1,7 +1,7 @@
 FROM ekidd/rust-musl-builder:1.44.0 as build
 
-COPY . /project
-WORKDIR /project
+COPY . /tmp/project
+WORKDIR /tmp/project
 RUN cargo build --release
 
 FROM alpine:latest
