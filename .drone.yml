@@ -6,6 +6,7 @@ steps:
   # Make sure image builds
   - name: build
     image: plugins/docker:latest
+    repo: katharostech/embedit
     settings:
       dry_run: true
 
