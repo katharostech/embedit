@@ -9,7 +9,7 @@ extern crate lazy_static_include;
 #[macro_use]
 extern crate lazy_static;
 
-lazy_static_include_str!(HTML_WRAPPER, "./wrapper.html");
+lazy_static_include_str!(HTML_PAGE, "./page.html");
 lazy_static_include_str!(HTML_EMBED, "./video-embed.html");
 
 #[derive(Debug, Deserialize)]
@@ -29,8 +29,11 @@ pub async fn run() {
     // Match any request and return hello world!
     let routes = warp::path("oembed.json")
         .and(query::<OEmbedQuery>())
-        .map(|query_data: OEmbedQuery| {
-            let embed = HTML_EMBED.replace("{video_url}", &query_data.url);
+        .and(warp::header::<String>("host"))
+        .map(|query_data: OEmbedQuery, host: String| {
+            let embed = HTML_EMBED
+                .replace("{video_url}", &query_data.url)
+                .replace("{host}", &host);
 
             warp::reply::json(&json!({
                 "type": "video",
@@ -47,13 +50,10 @@ pub async fn run() {
             // Return an HTML page with the embedded video and the oembed representation
             // meta tag
             .map(|query_data: VideoQuery, host: String| {
-                let embed = HTML_EMBED.replace("{video_url}", &query_data.video);
                 warp::reply::html(
-                    HTML_WRAPPER
-                        // URL encode the video that will go into the head tag  for the oembed.json endpoint
-                        .replace("{host}", &host)
-                        .replace("{video_url}", &urlencoding::encode(&query_data.video))
-                        .replace("{body}", &embed),
+                    HTML_PAGE
+                        .replace("{video_url}", &query_data.video)
+                        .replace("{host}", &host),
                 )
             }));
 

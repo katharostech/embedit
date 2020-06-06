@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <!-- TODO: Assuming HTTPS -->
+    <link
+      rel="alternate"
+      type="application/json+oembed"
+      href="https://{host}/oembed.json?url={video_url}"
+    />
+  </head>
+  <body>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"
+    ></script>
+    <div id="player"></div>
+    <script>
+      var player = new Clappr.Player({
+        source: "{video_url}",
+        parentId: "#player"
+      });
+    </script>
+  </body>
+</html>
